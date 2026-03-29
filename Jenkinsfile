@@ -3,15 +3,9 @@ pipeline {
 
     stages {
 
-        stage('Clone') {
-            steps {
-                git 'https://github.com/mahi131005/password-generator.git'
-            }
-        }
-
         stage('Build') {
             steps {
-                echo "No build required"
+                echo "No build required for static website"
             }
         }
 
