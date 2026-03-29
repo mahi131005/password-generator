@@ -5,7 +5,7 @@ pipeline {
 
         stage('Clone') {
             steps {
-                git 'https://github.com/your-username/sample-app.git'
+                git 'https://github.com/mahi131005/password-generator.git'
             }
         }
 
