@@ -19,8 +19,13 @@ pipeline {
             steps {
                 sh '''
                 docker rm -f web || true
+
+                # Fix permissions so Nginx can read files
+                chmod -R 755 .
+
+                # Run Nginx container and mount project files
                 docker run -d -p 8081:80 --name web \
-                -v $(pwd):/usr/share/nginx/html nginx
+                -v $(pwd):/usr/share/nginx/html:ro nginx
                 '''
             }
         }
