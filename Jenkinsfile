@@ -19,13 +19,18 @@ pipeline {
             steps {
                 sh '''
                 docker rm -f web || true
-
-                # Fix permissions so Nginx can read files
-                chmod -R 755 .
-
-                # Run Nginx container and mount project files
-                docker run -d -p 8081:80 --name web \
-                -v $(pwd):/usr/share/nginx/html:ro nginx
+        
+                # Create temporary Dockerfile
+                cat <<EOF > Dockerfile
+                FROM nginx:alpine
+                COPY . /usr/share/nginx/html
+                EOF
+        
+                # Build custom image
+                docker build -t my-static-app .
+        
+                # Run container
+                docker run -d -p 8081:80 --name web my-static-app
                 '''
             }
         }
